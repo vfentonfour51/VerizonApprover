@@ -1,0 +1,166 @@
+//
+// Utilities
+// --------------------------------------------------
+
+//== A more perfect responsive table to display line items into block elements on phone
+.panel-table {
+  &:extend(.clearfix all);
+  padding: 0;
+  border: 1px solid @panel-default-border;
+  margin: 15px;
+
+  input,
+  select,
+  text,
+  textarea {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  [class*="col-"] {
+    border-left: 1px solid @panel-default-border;
+    &:first-of-type {
+      border-left: none;
+    }
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    border-bottom: 1px solid @panel-default-border;
+    &:last-child {
+      border-bottom: none;
+    }
+    // border columns as cells
+    [class*="col-"] {
+      min-height: 45px;
+    }
+    .btn {
+      margin: 2px 0;
+    }
+    span.panel-table-heading-xs {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+
+}
+
+//== Headroom
+.navbar-fixed-top.headroom {
+  transition: all .5s ease-in-out;
+  &.headroom--unpinned {
+    top: -100px;
+  }
+  &.headroom--pinned {
+    top: 0;
+  }
+}
+
+.navbar-fixed-bottom.headroom {
+  transition: all .5s ease-in-out;
+  &.headroom--unpinned {
+    bottom: -100px;
+  }
+  &.headroom--pinned {
+    bottom: 0;
+  }
+}
+
+//== Loading indicator
+.app-loading-indicator-cell {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1029;
+  padding: 10px 0;
+  background-color:lighten(@brand-primary, 80%);
+  opacity: .75;
+  &:after {
+  content: "";
+  position: absolute;
+  top: 49%;
+  left: 49%;
+  height: 25px;
+  width: 25px;
+  margin-top: -15px;
+  -webkit-animation: rockstep .8s infinite linear;
+  -moz-animation: rockstep .8s infinite linear;
+  -o-animation: rockstep .8s infinite linear;
+  animation: rockstep .8s infinite linear;
+  border-left:3px solid rgba(0,174,239,.15);
+  border-right:3px solid rgba(0,174,239,.15);
+  border-bottom:3px solid rgba(0,174,239,.15);
+  border-top:3px solid darken(@navbar-default-bg, 35%);
+  border-radius:100%;
+  }
+
+  p {
+    background-color:lighten(@brand-primary, 80%);
+    color:darken(@navbar-default-bg, 35%);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+//== No padding on columns
+.col-collapse {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+//== datepicker table
+table[datepicker]{
+    margin-left: 5px;
+    margin-right: 5px;
+    border-collapse: separate;
+    border-spacing: 1px;
+}
+
+//** no image available
+.empty {
+  text-align: center;
+  i.fa {
+    color: @fourfiveone-form-icon-color;
+  }
+}
+
+//== Glyphicon Fixes for ui.bootstrap tpls
+.glyphicon {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-chevron-left:before {
+  content:'\f053';
+}
+.glyphicon-chevron-right:before {
+  content:'\f054';
+}
+.glyphicon-chevron-up:before {
+  content:'\f077';
+}
+.glyphicon-chevron-down:before {
+  content:'\f078';
+}
+.glyphicon-chevron-star:before {
+  content:'\f005';
+}
+.glyphicon-chevron-star-empty:before {
+  content:'\f006';
+}
