@@ -1,7 +1,7 @@
 four51.app.directive('orderhistorydetails', function() {
 	var obj = {
 		restrict: 'E',
-		templateUrl: 'partials/Reporting/orderHistoryDetailsView.html'
+		templateUrl: 'partials/reporting/orderHistoryDetailsView.html'
 	};
 	return obj;
 });
@@ -9,7 +9,7 @@ four51.app.directive('orderhistorydetails', function() {
 four51.app.directive('orderhistorysummary', function() {
 	var obj = {
 		restrict: 'E',
-		templateUrl: 'partials/Reporting/orderHistorySummaryView.html'
+		templateUrl: 'partials/reporting/orderHistorySummaryView.html'
 	};
 	return obj;
 });
@@ -17,7 +17,7 @@ four51.app.directive('orderhistorysummary', function() {
 four51.app.directive('lineitemhistorygrid', function() {
 	var obj = {
 		restrict: 'E',
-		templateUrl: 'partials/Reporting/lineItemHistoryGridView.html'
+		templateUrl: 'partials/reporting/lineItemHistoryGridView.html'
 	};
 	return obj;
 });
@@ -25,7 +25,7 @@ four51.app.directive('lineitemhistorygrid', function() {
 four51.app.directive('lineitemreport', function() {
 	var obj = {
 		restrict: 'E',
-		templateUrl: 'partials/Reporting/lineItemReport.html',
+		templateUrl: 'partials/reporting/lineItemReport.html',
 		controller: ['$scope', function($scope) {
 			$scope.open = function(cal, event) {
 				event.preventDefault();

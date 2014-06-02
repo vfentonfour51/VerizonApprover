@@ -1,0 +1,169 @@
+<section class="container order-history-view">
+    <loadingindicator ng-show="loadingIndicator" title="Please wait while we fetch your order"></loadingindicator>
+    <div class="order-history-view-detail-phone hidden-print">
+        <div class="row" style="margin-top:15px;">
+            <div class="container">
+                <h4 class="text-center">ID: {{order.ExternalID}}</h4>
+                <div class="date-badge pull-left">
+                    <p class="date-badge-month"><small>{{order.DateSubmitted || order.DateCreated | date:'MMM'}}</small></p>
+                    <h3><b>{{order.DateSubmitted || order.DateCreated | date:'dd'}}</b></h3>
+                    <p class="date-badge-day"><small>{{order.DateSubmitted || order.DateCreated | date:'EEE'}}</small></p>
+                </div>
+                <div style="margin-left:65px;">
+                    <div ng-class="{'payment-badge-container': order.CostCenter}">
+                        <div class="misc-badge">
+                            <p class="date-badge-month"><small>Payment Method</small></p>
+                            <div class="container" style="min-height:57px;">
+                                <p style="margin-bottom:0; padding-top:10px;">
+                                    <small>
+                                        {{order.PaymentMethodText}}<br ng-show="order.CreditCard.Type">
+                                        <strong ng-show="order.CreditCard.Type">{{order.CreditCard.DisplayName}}</strong>
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width:50%;" ng-show="order.CostCenter">
+                        <div class="misc-badge">
+                            <p class="date-badge-month"><small>Cost Center</small></p>
+                            <div class="container" style="min-height:57px;">
+                                <p style="margin-bottom:0;"><small>{{order.CostCenter}}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px;">
+            <div class="container" style="padding-top:15px; padding-bottom:15px; background-color:#FFF;">
+                <i class="fa fa-user fa-3x text-muted pull-left"></i>
+                <p style="margin:0 0 0 45px;"><b>CREATOR</b></p>
+                <p style="margin:0 0 0 45px;" class="text-info">{{order.FromUserFirstName + ' ' + order.FromUserLastName}}</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px;" ng-show="order.Comments">
+            <div class="container" style="padding-top:15px; padding-bottom:15px; background-color:#FFF;">
+                <i class="fa fa-comment fa-3x text-muted pull-left"></i>
+                <p style="margin:0 0 0 45px;"><b>COMMENTS</b></p>
+                <p style="margin:0 0 0 45px;" class="text-info">
+                    {{order.Comments}}
+                </p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px;" ng-if="!(user.Permissions.contains('HidePricing'))">
+            <div class="container" style="padding-top:15px; padding-bottom:15px; background-color:#FFF;">
+                <i class="fa fa-file-text fa-3x text-muted pull-left"></i>
+                <p style="margin:0 0 0 45px;"><b>COST SUMMARY</b></p>
+                <div class="view-summary text-right" style="margin:15px 0 0 45px;">
+                    <p><span class="text-info">Subtotal</span>{{order.Subtotal | currency:"$"}}</p>
+                    <p><span class="text-info">Shipping & Handling</span>{{order.ShippingCost | currency:"$"}}</p>
+                    <p><span class="text-info">Tax</span>{{order.TaxCost | currency:"$"}}</p>
+                    <p ng-if="order.Coupon"><span class="text-info">Coupon ({{order.Coupon.Label}})</span>{{order.Coupon.OrderDiscount * -1 | currency}}</p>
+                    <hr style="border-top-color: #DDDDDD; margin: 10px -15px 10px -60px;">
+                    <p><span class="text-info">Total</span>{{order.Total | currency:"$"}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:15px;" ng-show="order.ShipAddress">
+            <div class="container" style="padding-top:15px; padding-bottom:15px; background-color:#FFF;">
+                <i class="fa fa-map-marker fa-3x text-muted pull-left"></i>
+                <address ng-show="order.ShipAddress" class="pull-right" style="margin-bottom:0; max-width:150px;">
+                    <p class="text-right">
+                        {{order.ShipAddress.FirstName + ' ' + order.ShipAddress.LastName}}<br ng-show="order.ShipAddress.FirstName || order.ShipAddress.LastName">
+                        <small>{{order.ShipAddress.CompanyName}}</small><br ng-show="order.ShipAddress.CompanyName">
+                        {{order.ShipAddress.Street1}}<br>
+                        {{order.ShipAddress.Street2}}<br ng-show="order.ShipAddress.Street2">
+                        {{order.ShipAddress.City}}, {{order.ShipAddress.State}} {{order.ShipAddress.Zip}}
+                    </p>
+                </address>
+                <p style="margin:0;"><b>SHIPPING<br>ADDRESS</b></p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px;" ng-show="order.BillAddress">
+            <div class="container" style="padding-top:15px; padding-bottom:15px; background-color:#FFF;">
+                <i class="fa fa-map-marker fa-3x text-muted pull-left"></i>
+                <address ng-show="order.BillAddress" class="pull-right" style="margin-bottom:0; max-width:150px;">
+                    <p class="text-right">
+                        {{order.BillAddress.FirstName + ' ' + order.BillAddress.LastName}}<br ng-show="order.BillAddress.FirstName || order.BillAddress.LastName">
+                        <small>{{order.ShipAddress.CompanyName}}</small><br ng-show="order.BillAddress.CompanyName">
+                        {{order.BillAddress.Street1}}<br>
+                        {{order.BillAddress.Street2}}<br ng-show="order.BillAddress.Street2">
+                        {{order.BillAddress.City}}, {{order.BillAddress.State}} {{order.BillAddress.Zip}}
+                    </p>
+                </address>
+                <p style="margin:0;"><b>BILLING<br>ADDRESS</b></p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px; margin-bottom:85px;">
+            <div class="panel panel-default order-history-view-line-items" style="border:none;">
+                <div class="panel-heading" style="border:none;">
+                    <h3 class="panel-title panel-primary">
+                        {{order.LineItems.length}} item{{currentOrder.LineItems.length > 1 ? 's' : ''}} in this order
+                    </h3>
+                </div>
+                <div class="panel-body" style="border:none;">
+                    <div class="row">
+                        <div class="container" ng-class="{'order-history-view-line-items-repeater': order.LineItems.length > 1}" ng-repeat="item in order.LineItems">
+                            <div class="order-history-view-line-items-product row">
+                                <div class="col-sm-6">
+                                    <!--- Removed link to static line item history view. Carry over from COS? I don't believe we need this page anymore. --->
+                                    <h3 class="text-primary" style="margin: 0; padding: 0;">
+                                        <a ng-href="#/order/{{order.ID}}/{{$index}}" style="color:#3A87AD;">{{item.ProductIDText}}</a>
+                                    </h3>
+                                    <span>{{item.Product.Name}}</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div ng-if="!(user.Permissions.contains('HidePricing'))" class="col-xs-12 col-sm-4">
+                                            <p>
+                                                <small class="text-info">Total</small><br />
+                                                <span class="text-success">{{item.LineTotal | currency:"$"}}</span>
+                                            </p>
+                                        </div>
+                                        <div ng-if="!(user.Permissions.contains('HidePricing'))" class="col-xs-12 col-sm-4">
+                                            <p>
+                                                <small class="text-info">Unit Price</small><br />
+                                                <span class="text-success">{{item.UnitPrice | currency:"$"}}</span> x {{item.Quantity * (item.Product.QuantityMultiplier || 1)}}
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4" ng-show="order.Status == 'Open'">
+                                            <p>
+                                                <small class="text-info">Shipped</small><br />
+                                                {{item.TotalShipped}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <p ng-if="item.CostCenter">
+                                                <span class="text-info">Item Cost Center</span> {{item.CostCenter}}
+                                            </p>
+                                            <p ng-if="item.ShipperName">
+                                                <strong>Shipper Name</strong><br />
+                                                {{item.ShipperName}}
+                                            </p>
+                                            <address ng-show="item.ShipAddress">
+                                                <strong>Ship to</strong><br>
+                                                {{item.ShipAddress.Street1}}<br>
+                                                {{item.ShipAddress.Street2}}<br ng-show="item.ShipAddress.Street2">
+                                                {{item.ShipAddress.City}}, {{item.ShipAddress.State}} {{item.ShipAddress.Zip}}
+                                            </address>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <p ng-if="item.ShipAccount">
+                                                <strong>Shipper Account</strong><br />
+                                                {{item.ShipAccount}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <approval ng-show="order.Status == 'AwaitingApproval' && (order.UserCanApprove || user.Permissions.contains('ApproveAllOrders'))" order="order"/>
+    </div>
+</section>

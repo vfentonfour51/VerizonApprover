@@ -8,7 +8,13 @@
                             <i class="fa fa-arrow-left"></i>
                         </a>
                     </li>
-                    <li class="products" ng-class="{'active': isInPath('catalog') || isInPath('product') || isInPath('cart/default') || isInPath('search')}">
+                    <li class="products" ng-class="{'active': isInPath('orders')}">
+                        <a id="451qa_home_link" ng-show="Four51User.isAuthenticated()" href="orders">
+                            <i class="fa fa-home"></i>
+                            <span class="hidden-xs">{{'Home' | rc}}</span>
+                        </a>
+                    </li>
+                    <!--<li class="products" ng-class="{'active': isInPath('catalog') || isInPath('product') || isInPath('cart/default') || isInPath('search')}">
                         <a id="451qa_home_link" ng-show="Four51User.isAuthenticated()" href="catalog">
                             <i class="fa fa-home"></i>
                             <span class="hidden-xs">{{'Products' | rc}}</span>
@@ -79,9 +85,9 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                 </ul>
-                <ul class="nav navbar-nav pull-right">
+                <!--<ul class="nav navbar-nav pull-right">
                     <li class="cart" ng-class="{'active': isActive(['cart', 'checkout'])}">
                         <a id="451qa_cart_link" ng-show="cartCount" class="cart" href="cart">
                             <span ng-bind="cartCount" class="badge"></span>
@@ -89,7 +95,7 @@
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </li>
-                </ul>
+                </ul>-->
             </div>
         </section>
     </nav>
