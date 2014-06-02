@@ -75,32 +75,29 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
         };
 
         $scope.viewOrder = function(order) {
-            if($(window).width() <= 767){
-                $location.path('/orders/' + order.ID);
-            } else {
-                $scope.orderLoadingIndicator = true;
-                Order.get(order.ID, function(ordr) {
-                    $scope.selectedOrder = ordr;
-                    $scope.orderLoadingIndicator = false;
-                    if ($scope.selectedOrder.LineItems.length == 1) {
-                        Address.get($scope.selectedOrder.LineItems[0].ShipAddressID, function(add) {
-                            $scope.selectedOrder.ShipAddress = add;
-                        });
-                    }
-                    else {
-                        angular.forEach($scope.selectedOrder.LineItems, function(item) {
-                            if (item.ShipAddressID) {
-                                Address.get(item.ShipAddressID, function(add) {
-                                    item.ShipAddress = add;
-                                });
-                            }
-                        });
-                    }
-                    Address.get($scope.selectedOrder.BillAddressID, function(add){
-                        $scope.selectedOrder.BillAddress = add;
+            $scope.orderLoadingIndicator = true;
+            Order.get(order.ID, function(ordr) {
+                $scope.selectedOrder = ordr;
+                $scope.orderLoadingIndicator = false;
+                if ($scope.selectedOrder.LineItems.length == 1) {
+                    Address.get($scope.selectedOrder.LineItems[0].ShipAddressID, function(add) {
+                        $scope.selectedOrder.ShipAddress = add;
                     });
+                }
+                else {
+                    angular.forEach($scope.selectedOrder.LineItems, function(item) {
+                        if (item.ShipAddressID) {
+                            Address.get(item.ShipAddressID, function(add) {
+                                item.ShipAddress = add;
+                            });
+                        }
+                    });
+                }
+                Address.get($scope.selectedOrder.BillAddressID, function(add){
+                    $scope.selectedOrder.BillAddress = add;
                 });
-            }
+            });
+
         };
 
         $scope.isPhone = function(){
