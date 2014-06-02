@@ -3,7 +3,21 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
         $scope.viewToggle = true;
         $scope.changeStep = function(){
             $scope.viewToggle = !$scope.viewToggle;
-        }
+        };
+
+        $scope.sortOptions = [
+            {"Label":"Order ID","Value":"ExternalID"},
+            {"Label":"Date Created","Value":"DateCreated"},
+            {"Label":"Creator","Value":"FromUserName"}
+        ];
+
+        $scope.reverse = false;
+
+        $scope.$watch('sortOption', function(newval,oldval) {
+            if (newval != oldval) {
+                $scope.reverse = false;
+            }
+        }, true);
 
         OrderSearchCriteria.query(function(data) {
             $scope.OrderSearchCriteria = data;

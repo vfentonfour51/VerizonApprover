@@ -10,19 +10,24 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-5">
                 <div class="view-form-icon">
                     <div>
                         <label>Sort</label>
-                        <select class="form-control" /></select>
+                        <select class="form-control" ng-model="sortOption" ng-options="option.Label for option in sortOptions">
+                            <option></option>
+                        </select>
                         <i class="fa fa-sort"></i>
                     </div>
                 </div>
             </div>
+            <div class="col-xs-1">
+                <div class="btn" ng-show="sortOption" ng-click="reverse = !reverse"><i class="fa" ng-class="{'fa-long-arrow-down':reverse,'fa-long-arrow-up':!reverse}"></i></div>
+            </div>
         </div>
     </div>
     <ul>
-       <li ng-repeat="order in orders">
+       <li ng-repeat="order in orders | filter:keyword | orderBy : sortOption.Value : reverse">
            <div ng-click="viewOrder(order); changeStep();" ng-class="{'active': order.ExternalID == selectedOrder.ExternalID}">
                <div class="row">
                    <div class="col-xs-3 text-center">
@@ -39,7 +44,7 @@
                        </ul>
                        <ul class="list-group">
                            <li class="list-group-item text-center list-group-item-info"><small>Creator</small></li>
-                           <li class="list-group-item"><small>{{order.FromUserFirstName + ' ' + order.FromUserLastName}}</small></li>
+                           <li class="list-group-item"><small>{{order.FromUserName}}</small></li>
                        </ul>
                    </div>
                    <div class="col-xs-4 text-center">
