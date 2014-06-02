@@ -4,7 +4,7 @@
             <div class="col-xs-6">
                 <div class="view-form-icon">
                     <div>
-                        <label>Search</label>
+                        <label>{{'Search' | r}}</label>
                         <input type="text" ng-model="keyword" class="form-control"/>
                         <i class="fa fa-search"></i>
                     </div>
@@ -13,8 +13,8 @@
             <div class="col-xs-5">
                 <div class="view-form-icon">
                     <div>
-                        <label>Sort</label>
-                        <select class="form-control" ng-model="sortOption" ng-options="option.Label for option in sortOptions">
+                        <label>{{'Sort' | r}}</label>
+                        <select class="form-control" ng-model="sortOption" ng-options="(option.Label | r) for option in sortOptions">
                             <option></option>
                         </select>
                         <i class="fa fa-sort"></i>
@@ -39,16 +39,16 @@
                    </div>
                    <div class="col-xs-5">
                        <ul class="list-group">
-                           <li class="list-group-item text-center list-group-item-info"><small>Order ID</small></li>
+                           <li class="list-group-item text-center list-group-item-info"><small>{{'Order ID' | r}}</small></li>
                            <li class="list-group-item"><small>{{order.ExternalID}}</small></li>
                        </ul>
                        <ul class="list-group">
-                           <li class="list-group-item text-center list-group-item-info"><small>Creator</small></li>
+                           <li class="list-group-item text-center list-group-item-info"><small>{{'Creator' | r}}</small></li>
                            <li class="list-group-item"><small>{{order.FromUserName}}</small></li>
                        </ul>
                    </div>
                    <div class="col-xs-4 text-center">
-                       <small>Total</small>
+                       <small>{{'Total' | r}}</small>
                        <h3 class="text-success"><b>{{order.Total | currency:"$"}}</b></h3>
                    </div>
                </div>
