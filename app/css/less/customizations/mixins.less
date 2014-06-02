@@ -22,7 +22,9 @@
 //== Media queries breakpoints
 //** phone < 618px
 @media (max-width: @screen-xs-max) {
-  // code
+  .date-badge{
+    width:65px;
+  }
 }
 
 //** tablet portrait < 768px
@@ -91,6 +93,96 @@
 //== Type
 
 //== Miscellaneous
+.date-badge{
+  width:70px;
+  @media (max-width: @screen-xs-max) {
+    width:65px;
+  }
+  border:1px solid #ddd;
+  border-radius: @border-radius-base;
+  background-color:#fff;
+  display:inline-block;
+  overflow:hidden;
+  text-align:center;
+  -webkit-box-shadow: 0 2px 2px 0 fade(#000, 30);
+  box-shadow: 0 2px 2px 0 fade(#000, 30);
+  & > h3{
+    cursor:default;
+    margin:10px 0;
+    color:#333;
+  }
+  & > div{
+    cursor:default;
+    padding:5px 0;
+    font-size:0.8em;
+    &:first-of-type{
+      background-color:@brand-primary;
+      color:#fff;
+      text-transform:uppercase;
+    }
+    &:last-of-type{
+      border-top:1px dashed #ddd;
+    }
+  }
+}
+
+.approval-list-view{
+  .approval-list-toolbar{
+    padding:0 5px 5px;
+    margin-bottom:5px;
+    background-color:#ddd;
+    .border-right-radius(@border-radius-base);
+    .border-left-radius(@border-radius-base);
+  }
+  & > ul{
+    & > li{
+      position:relative;
+      & > div{
+        padding:5px;
+        background-color:#FFF;
+        margin-bottom:5px;
+        border:1px solid #ddd;
+        cursor: pointer;
+        &.active{
+          &:after{
+            transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            font-family:FontAwesome;
+            content:'\f04b';
+            color:@body-bg;
+            position:absolute;
+            top:30%;
+            right:-2px;
+            font-size:2.5em;
+          }
+          &:before{
+            transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            font-family:FontAwesome;
+            content:'\f04b';
+            color:#ddd;
+            position:absolute;
+            top:30%;
+            right:0px;
+            font-size:2.5em;
+          }
+        }
+      }
+    }
+  }
+
+  .list-group{
+    &:first-of-type{
+      margin-top:0;
+    }
+    li{
+      padding:2px 10px;
+    }
+  }
+}
+
 
 
 //

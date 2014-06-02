@@ -1,0 +1,53 @@
+<section class="approval-list-view">
+    <div class="approval-list-toolbar">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="view-form-icon">
+                    <div>
+                        <label>Search</label>
+                        <input type="text" ng-model="keyword" class="form-control"/>
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="view-form-icon">
+                    <div>
+                        <label>Sort</label>
+                        <select class="form-control" /></select>
+                        <i class="fa fa-sort"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul>
+       <li ng-repeat="order in orders">
+           <div ng-click="viewOrder(order); changeStep();" ng-class="{'active': order.ExternalID == selectedOrder.ExternalID}">
+               <div class="row">
+                   <div class="col-xs-3 text-center">
+                       <div class="date-badge">
+                           <div>{{order.DateCreated | date:'MMM'}}</div>
+                           <h3>{{order.DateCreated | date:'dd'}}</h3>
+                           <div>{{order.DateCreated | date:'EEEE'}}</div>
+                       </div>
+                   </div>
+                   <div class="col-xs-5">
+                       <ul class="list-group">
+                           <li class="list-group-item text-center list-group-item-info"><small>Order ID</small></li>
+                           <li class="list-group-item"><small>{{order.ExternalID}}</small></li>
+                       </ul>
+                       <ul class="list-group">
+                           <li class="list-group-item text-center list-group-item-info"><small>Creator</small></li>
+                           <li class="list-group-item"><small>{{order.FromUserFirstName + ' ' + order.FromUserLastName}}</small></li>
+                       </ul>
+                   </div>
+                   <div class="col-xs-4 text-center">
+                       <small>Total</small>
+                       <h3 class="text-success"><b>{{order.Total | currency:"$"}}</b></h3>
+                   </div>
+               </div>
+           </div>
+       </li>
+    </ul>
+</section>

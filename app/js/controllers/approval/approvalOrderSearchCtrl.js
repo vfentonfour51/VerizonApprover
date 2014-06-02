@@ -1,5 +1,10 @@
 four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderSearchCriteria', 'OrderSearch', 'Order', 'Address',
     function ($scope,  $location, OrderSearchCriteria, OrderSearch, Order, Address) {
+        $scope.viewToggle = true;
+        $scope.changeStep = function(){
+            $scope.viewToggle = !$scope.viewToggle;
+        }
+
         OrderSearchCriteria.query(function(data) {
             $scope.OrderSearchCriteria = data;
             $scope.hasStandardTypes = _hasType(data, 'Standard');
