@@ -7607,8 +7607,6 @@ table[datepicker] {
   display: inline-block;
   overflow: hidden;
   text-align: center;
-  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 @media (max-width: 767px) {
   .date-badge {
@@ -7669,6 +7667,9 @@ table[datepicker] {
 .approval-list-view .list-group:first-of-type {
   margin-top: 0;
 }
+.approval-list-view .list-group:last-of-type {
+  margin-bottom: 0;
+}
 .approval-list-view .list-group li {
   padding: 2px 10px;
 }
@@ -7683,7 +7684,7 @@ table[datepicker] {
 .approval-order-view .list-group li {
   padding: 2px 10px;
 }
-.approval-order-view .cost-summary p > span {
+.approval-order-view .cost-summary span {
   float: left;
 }
 .approval-order-view .well {

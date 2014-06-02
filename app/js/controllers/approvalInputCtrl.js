@@ -7,6 +7,7 @@ function ($scope, $rootScope, Order) {
 			function(data) {
 				$scope.order = data;
 				$scope.loadingIndicator = false;
+                $rootScope.$broadcast('event:approvalComplete');
 			},
 			function(ex) {
 				$scope.loadingIndicator = false;
@@ -22,6 +23,7 @@ function ($scope, $rootScope, Order) {
 			function(data) {
 				$scope.order = data;
 				$scope.loadingIndicator = false;
+                $rootScope.$broadcast('event:approvalComplete');
 			},
 			function(ex) {
 				$scope.loadingIndicator = false;
@@ -29,4 +31,9 @@ function ($scope, $rootScope, Order) {
 			}
 		);
 	}
+
+    $scope.commentToggle = false;
+    $scope.toggleComments = function(){
+        $scope.commentToggle = !$scope.commentToggle;
+    }
 }]);

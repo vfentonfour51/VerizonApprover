@@ -1,33 +1,42 @@
 <section class="approval-list-view">
-    <div class="approval-list-toolbar">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="view-form-icon">
-                    <div>
-                        <label>{{'Search' | r}}</label>
-                        <input type="text" ng-model="keyword" class="form-control"/>
-                        <i class="fa fa-search"></i>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Find an {{'Order' | r}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="view-form-icon">
+                        <div>
+                            <label>{{'Search' | r}}</label>
+                            <input type="text" ng-model="keyword" class="form-control"/>
+                            <i class="fa fa-search"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-5">
-                <div class="view-form-icon">
-                    <div>
-                        <label>{{'Sort' | r}}</label>
-                        <select class="form-control" ng-model="sortOption" ng-options="(option.Label | r) for option in sortOptions">
-                            <option></option>
-                        </select>
-                        <i class="fa fa-sort"></i>
+                <div class="col-xs-5">
+                    <div class="view-form-icon">
+                        <div>
+                            <label>{{'Sort' | r}}</label>
+                            <select class="form-control" ng-model="sortOption" ng-options="(option.Label | r) for option in sortOptions">
+                                <option></option>
+                            </select>
+                            <i class="fa fa-sort"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-1">
-                <div class="btn" ng-show="sortOption" ng-click="reverse = !reverse"><i class="fa" ng-class="{'fa-long-arrow-down':reverse,'fa-long-arrow-up':!reverse}"></i></div>
+                <div class="col-xs-1">
+                    <div class="view-form-icon">
+                        <div>
+                            <div class="btn btn-default btn-block" ng-show="sortOption" ng-click="reverse = !reverse"><i class="fa" ng-class="{'fa-long-arrow-down':reverse,'fa-long-arrow-up':!reverse}"></i></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <ul>
-       <li ng-repeat="order in orders | filter:keyword | orderBy : sortOption.Value : reverse">
+       <li ng-repeat="order in filteredOrders = (orders | filter:keyword | orderBy : sortOption.Value : reverse)">
            <div ng-click="viewOrder(order); changeStep();" ng-class="{'active': order.ExternalID == selectedOrder.ExternalID}">
                <div class="row">
                    <div class="col-xs-3 text-center">
@@ -47,12 +56,19 @@
                            <li class="list-group-item"><small>{{order.FromUserName}}</small></li>
                        </ul>
                    </div>
+
                    <div class="col-xs-4 text-center">
                        <small>{{'Total' | r}}</small>
-                       <h3 class="text-success"><b>{{order.Total | currency:"$"}}</b></h3>
+                       <h3 class="text-success">{{order.Total | currency:"$"}}</h3>
                    </div>
                </div>
            </div>
        </li>
     </ul>
+    <div class="alert alert-warning text-center" ng-show="filteredOrders.length == 0 && orders.length > 0">
+        <p>Your filters are bunk.</p>
+    </div>
+    <div class="alert alert-info text-center" ng-show="orders.length == 0">
+        <p>You have no orders awaiting approval.</p>
+    </div>
 </section>

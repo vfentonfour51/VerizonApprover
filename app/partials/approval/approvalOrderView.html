@@ -3,28 +3,29 @@
     <div class="row">
         <div class="col-sm-6 col-md-12 col-lg-6">
             <div class="row" style="margin-top:10px; margin-bottom:10px;">
-                <div class="col-xs-3 col-lg-2 text-center">
+                <div class="col-xs-3 text-center">
                     <div class="date-badge">
                         <div>{{selectedOrder.DateCreated | date:'MMM'}}</div>
                         <h3>{{selectedOrder.DateCreated | date:'dd'}}</h3>
                         <div>{{selectedOrder.DateCreated | date:'EEEE'}}</div>
                     </div>
                 </div>
-                <div class="col-xs-9 col-lg-8">
-                    <h4 class="text-center">ID: {{selectedOrder.ExternalID}}</h4>
+                <div class="col-xs-9">
+                    <h4 class="text-center">Order ID: <b>{{selectedOrder.ExternalID}}</b></h4>
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-group">
-                                <li class="list-group-item text-center list-group-item-info"><small>Payment Method</small></li>
-                                <li class="list-group-item"><small>{{selectedOrder.PaymentMethodText}}<br ng-show="selectedOrder.CreditCard.Type">
-                                    <strong ng-show="selectedOrder.CreditCard.Type">{{selectedOrder.CreditCard.DisplayName}}</strong></small>
+                                <li class="list-group-item text-center"><small><b>Payment Method</b></small></li>
+                                <li class="list-group-item" style="padding:7px 10px;">
+                                    {{selectedOrder.PaymentMethodText}}<br ng-show="selectedOrder.CreditCard.Type">
+                                    <small ng-show="selectedOrder.CreditCard.Type">{{selectedOrder.CreditCard.DisplayName}}</small>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-group">
-                                <li class="list-group-item text-center list-group-item-info"><small>Cost Center</small></li>
-                                <li class="list-group-item"><small>{{selectedOrder.CostCenter}}</small></li>
+                                <li class="list-group-item text-center"><small><b>Cost Center</b></small></li>
+                                <li class="list-group-item" style="padding:7px 10px;">{{selectedOrder.CostCenter}}</li>
                             </ul>
                         </div>
                     </div>
@@ -63,7 +64,7 @@
                         <p><span class="text-info">Tax</span>{{selectedOrder.TaxCost | currency:"$"}}</p>
                         <p ng-if="selectedOrder.Coupon"><span class="text-info">Coupon ({{selectedOrder.Coupon.Label}})</span>{{selectedOrder.Coupon.selectedOrderDiscount * -1 | currency}}</p>
                         <hr style="border-top-color: #DDDDDD;">
-                        <p><span class="text-info">Total</span>{{selectedOrder.Total | currency:"$"}}</p>
+                        <h3><span class="text-info">Total</span>{{selectedOrder.Total | currency:"$"}}</h3>
                     </div>
                 </div>
             </div>
@@ -112,21 +113,21 @@
                     </h3>
                 </div>
                 <div class="panel-lineitem" ng-repeat="item in selectedOrder.LineItems">
-                    <div class="col-md-3 col-lg-12">
+                    <div class="col-md-3 ">
                         <div class="row">
-                            <div class="col-xs-6 col-sm-12 col-md-6 ">
+                            <div class="col-xs-6 col-sm-12 col-md-6 col-lg-12">
                                 <p class="quantity-total text-center" style="border: 1px solid #ddd;">
                                     <small>{{'Quantity' | r}}<br/> <span ng-show="item.Quantity * item.Product.QuantityMultiplier">{{item.Quantity * item.Product.QuantityMultiplier}}</span></small>
                                 </p>
                             </div>
-                            <div class="col-xs-6 col-sm-12 col-md-6 thumbnail" ng-show="item.Variant.LargeImageUrl || item.Product.SmallImageUrl">
+                            <div class="col-xs-6 col-sm-12 col-md-6 col-lg-12 thumbnail" ng-show="item.Variant.LargeImageUrl || item.Product.SmallImageUrl">
                                 <figure>
                                     <img ng-src="{{item.Variant.LargeImageUrl || item.Product.SmallImageUrl}}" />
                                 </figure>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9 col-lg-12">
+                    <div class="col-md-9 ">
                         <div class="row">
                             <div class="col-md-6 col-lg-12" >
                                 <a ng-href="orders/{{selectedOrder.ID}}/{{$index}}">
@@ -182,4 +183,5 @@
             </div>
         </div>
     </div>
+    <approval ng-show="selectedOrder.Status == 'AwaitingApproval' && (selectedOrder.UserCanApprove || user.Permissions.contains('ApproveAllselectedOrders'))" order="selectedOrder"/>
 </section>

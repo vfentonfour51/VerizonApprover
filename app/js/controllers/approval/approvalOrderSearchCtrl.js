@@ -45,12 +45,16 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             $scope.orderSearchStat = criteria;
         };
 
-        OrderSearch.search({Status:"AwaitingApproval"}, function(list) {
-            $scope.orderLoadingIndicator = true;
-            $scope.orders = list;
-            $scope.showNoResults = list.length == 0;
-            $scope.orderLoadingIndicator = false;
-        });
+        function getOrdersAwaitingApproval() {
+            OrderSearch.search({Status:"AwaitingApproval"}, function(list) {
+                $scope.orderLoadingIndicator = true;
+                $scope.orders = list;
+                $scope.showNoResults = list.length == 0;
+                $scope.orderLoadingIndicator = false;
+            });
+        }
+
+        getOrdersAwaitingApproval();
 
         $scope.approveOrder = function(order) {
             $scope.orderLoadingIndicator = true;
@@ -113,6 +117,11 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             });
 
         };
+
+        $scope.$on('event:approvalComplete', function() {
+            $scope.selectedOrder = null;
+            getOrdersAwaitingApproval();
+        });
 
         $scope.isPhone = function(){
             var isPhoneResult = true;
