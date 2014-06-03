@@ -20,7 +20,8 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
         $scope.sortOptions = [
             {"Label":"Order ID","Value":"ExternalID"},
             {"Label":"Date Created","Value":"DateCreated"},
-            {"Label":"Creator","Value":"FromUserName"}
+            {"Label":"Creator","Value":"FromUserName"},
+            {"Label":"Order Total","Value":"Total"}
         ];
 
         $scope.reverse = false;
