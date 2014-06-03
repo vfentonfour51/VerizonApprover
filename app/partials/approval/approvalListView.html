@@ -47,7 +47,7 @@
         </div>
         <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we load your orders"/>
         <li ng-repeat="order in filteredOrders = (orders | paginate:(settings.currentPage-1) * settings.pageSize | limitTo:settings.pageSize)  | filter:keyword | orderBy : sortOption.Value : reverse">
-           <div ng-click="viewOrder(order); changeStep();" ng-class="{'active': order.ExternalID == selectedOrder.ExternalID}">
+           <div ng-click="viewOrder(order); changeStep(1);" ng-class="{'active': order.ExternalID == selectedOrder.ExternalID}">
                <div class="row">
                    <div class="col-xs-3 text-center">
                        <div class="date-badge">

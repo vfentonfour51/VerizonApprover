@@ -4,7 +4,7 @@ function ($scope, $route, $location, $451, User, Order, Security, OrderConfig, C
 	$scope.scroll = 0;
 	$scope.isAnon = $451.isAnon; //need to know this before we have access to the user object
 	$scope.Four51User = Security;
-    $scope.viewToggle = true;
+    $scope.viewToggle = 0;
 	if ($451.isAnon && !Security.isAuthenticated()){
 		User.login(function() {
 			$route.reload();

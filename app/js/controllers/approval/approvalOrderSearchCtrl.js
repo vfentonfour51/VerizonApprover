@@ -5,12 +5,15 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             currentPage: 1
         };
 
-        $scope.changeStep = function(){
-            if(!$scope.viewToggle && !$scope.isDesktop()){
-                $scope.selectedOrder = null;
+        $scope.changeStep = function(x){
+            if (x != 2){
+                window.scrollTo(0, 0);
             }
-            $scope.viewToggle = !$scope.viewToggle;
-            window.scrollTo(0, 0);
+            else {
+                var top = $scope.isDesktop() ? 0 : $('#linetop').offset().top - 50;
+                window.scrollTo(0, top);
+            }
+            $scope.viewToggle = x;
             $scope.$broadcast('event:changeStep');
         };
 
@@ -81,6 +84,10 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
                 });
             });
 
+        };
+
+        $scope.viewLineItem = function(item) {
+            $scope.LineItem = item;
         };
 
         $scope.$on('event:approvalComplete', function() {

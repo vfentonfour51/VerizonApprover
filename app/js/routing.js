@@ -16,7 +16,5 @@ four51.app.config(['$routeProvider', '$locationProvider', function($routeProvide
         when('/conditions', { templateUrl: 'partials/conditions.html', controller: 'ConditionsCtrl' }).
 		when('/contactus/', { templateUrl: 'partials/Messages/contactus.html' }).
         when('/orders', { templateUrl: 'partials/approval/approvalView.html', controller: 'ApprovalOrderSearchCtrl' }).
-        when('/orders/:id', { templateUrl: 'partials/approval/reporting/orderApprovalHistoryView.html', controller: 'OrderApprovalViewCtrl' }).
-        when('/orders/:orderid/:lineitemindex/', { templateUrl: 'partials/approval/reporting/lineItemHistoryApprovalView.html', controller: 'LineItemApprovalViewCtrl' }).
 		otherwise({redirectTo: '/orders'});
 }]);
