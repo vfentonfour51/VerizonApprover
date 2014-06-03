@@ -1,5 +1,10 @@
 four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderSearchCriteria', 'OrderSearch', 'Order', 'Address',
     function ($scope,  $location, OrderSearchCriteria, OrderSearch, Order, Address) {
+        $scope.settings = {
+            pageSize: 100,
+            currentPage: 1
+        };
+
         $scope.viewToggle = true;
         $scope.changeStep = function(){
             $scope.viewToggle = !$scope.viewToggle;
@@ -13,48 +18,23 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
 
         $scope.reverse = false;
 
-        $scope.$watch('sortOption', function(newval,oldval) {
-            if (newval != oldval) {
-                $scope.reverse = false;
-            }
-        }, true);
-
-        OrderSearchCriteria.query(function(data) {
-            $scope.OrderSearchCriteria = data;
-            $scope.hasStandardTypes = _hasType(data, 'Standard');
-            $scope.hasReplenishmentTypes = _hasType(data, 'Replenishment');
-            $scope.hasPriceRequestTypes = _hasType(data, 'PriceRequest');
-        });
-
-        function _hasType(data, type) {
-            var hasType = false;
-            angular.forEach(data, function(o) {
-                if (hasType || o.Type == type && o.Count > 0)
-                    hasType = true;
-            });
-            return hasType;
-        }
-
-        $scope.OrderSearch = function($event, criteria) {
-            $event.preventDefault();
-            $scope.showNoResults = false;
-            OrderSearch.search(criteria, function(list) {
-                $scope.orders = list;
-                $scope.showNoResults = list.length == 0;
-            });
-            $scope.orderSearchStat = criteria;
-        };
-
         function getOrdersAwaitingApproval() {
-            OrderSearch.search({Status:"AwaitingApproval"}, function(list) {
+            var criteria = {Type: "Standard", Status: "AwaitingApproval", DisplayName: "Awaiting Approval", LastN: 0, OrderID: null};
+            $scope.orderLoadingIndicator = true;
+            OrderSearch.search(criteria, function(list, count) {
                 $scope.orderLoadingIndicator = true;
                 $scope.orders = list;
+                $scope.settings.listCount = count;
                 $scope.showNoResults = list.length == 0;
                 $scope.orderLoadingIndicator = false;
-            });
+            }, $scope.settings.currentPage, $scope.settings.pageSize);
         }
 
         getOrdersAwaitingApproval();
+
+        $scope.$watch('settings.currentPage', function() {
+            getOrdersAwaitingApproval($scope.settings.currentPage);
+        });
 
         $scope.approveOrder = function(order) {
             $scope.orderLoadingIndicator = true;
@@ -63,12 +43,8 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
                 function(data) {
                     $scope.order = data;
                     order.ApprovalStatus = 'Approved';
-                    OrderSearch.search({Status:"AwaitingApproval"}, function(list) {
-                        $scope.orderLoadingIndicator = true;
-                        $scope.orders = list;
-                        $scope.showNoResults = list.length == 0;
-                        $scope.orderLoadingIndicator = false;
-                    });
+                    $scope.settings.currentPage = 1;
+                    getOrdersAwaitingApproval($scope.settings.currentPage);
                 },
                 function(ex) {
                     $scope.error = ex.Detail;
@@ -83,12 +59,8 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             Order.submit(order, function(data) {
                 $scope.order = data;
                 order.ApprovalStatus = 'Declined';
-                OrderSearch.search({Status:"AwaitingApproval"}, function(list) {
-                    $scope.orderLoadingIndicator = true;
-                    $scope.orders = list;
-                    $scope.showNoResults = list.length == 0;
-                    $scope.orderLoadingIndicator = false;
-                });
+                $scope.settings.currentPage = 1;
+                getOrdersAwaitingApproval($scope.settings.currentPage);
             });
         };
 
@@ -120,7 +92,8 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
 
         $scope.$on('event:approvalComplete', function() {
             $scope.selectedOrder = null;
-            getOrdersAwaitingApproval();
+            $scope.settings.currentPage = 1;
+            getOrdersAwaitingApproval($scope.settings.currentPage);
         });
 
         $scope.isPhone = function(){

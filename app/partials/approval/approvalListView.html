@@ -36,7 +36,12 @@
         </div>
     </div>
     <ul>
-       <li ng-repeat="order in filteredOrders = (orders | filter:keyword | orderBy : sortOption.Value : reverse)">
+       <div ng-show="settings.listCount > settings.pageSize">
+            <pagination page="settings.currentPage" max-size="8" rotate="false" boundary-links="true" total-items="settings.listCount"
+                        items-per-page="settings.pageSize" direction-links="true"></pagination>
+       </div>
+       <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we load your orders"/>
+       <li ng-repeat="order in filteredOrders = (orders | paginate:(settings.currentPage-1) * settings.pageSize | limitTo:settings.pageSize)  | filter:keyword | orderBy : sortOption.Value : reverse">
            <div ng-click="viewOrder(order); changeStep();" ng-class="{'active': order.ExternalID == selectedOrder.ExternalID}">
                <div class="row">
                    <div class="col-xs-3 text-center">
@@ -64,6 +69,10 @@
                </div>
            </div>
        </li>
+        <div ng-show="settings.listCount > settings.pageSize">
+            <pagination page="settings.currentPage" max-size="8" rotate="false" boundary-links="true" total-items="settings.listCount"
+                        items-per-page="settings.pageSize" direction-links="true"></pagination>
+        </div>
     </ul>
     <div class="alert alert-warning text-center" ng-show="filteredOrders.length == 0 && orders.length > 0">
         <p>Your filters are bunk.</p>

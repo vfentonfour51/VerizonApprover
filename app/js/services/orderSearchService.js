@@ -1,19 +1,39 @@
 four51.app.factory('OrderSearch', ['$resource', '$451', function($resource, $451) {
-
-    var _search = function(stat, success) {
-	    (stat.DateRangeFrom && typeof stat.DateRangeFrom != 'string') ? stat.DateRangeFrom = stat.DateRangeFrom.toISOString() : null;
-	    (stat.DateRangeTo && typeof stat.DateRangeTo != 'string') ? stat.DateRangeTo = stat.DateRangeTo.toISOString() : null;
-        $resource($451.api('order'),{}, { 'get': { method: 'GET', isArray: true }}).get(stat).$promise.then(function(list) {
-            if (angular.isFunction(success)) {
-                angular.forEach(list, function(order) {
-                    order.FromUserName = order.FromUserFirstName + ' ' + order.FromUserLastName;
-                });
-                success(list);
-            }
-        });
+    var cache = [], statCache;
+    function _then(fn, data, count) {
+        if (angular.isFunction(fn))
+            fn(data, count);
     }
 
-	return {
-		search: _search
-	};
+    var _search = function(stat, success, page, pagesize) {
+        (stat.DateRangeFrom && typeof stat.DateRangeFrom != 'string') ? stat.DateRangeFrom = stat.DateRangeFrom.toISOString() : null;
+        (stat.DateRangeTo && typeof stat.DateRangeTo != 'string') ? stat.DateRangeTo = stat.DateRangeTo.toISOString() : null;
+
+        stat.page = page || 1;
+        stat.pagesize = pagesize || 10;
+
+        if (stat || stat != statCache) {
+            statCache = stat;
+            cache = [];
+        }
+        if (typeof cache[(page-1) * pagesize] == 'object' && typeof cache[(page * pagesize) - 1] == 'object') {
+            _then(success, cache, cache.length);
+        }
+        else {
+            $resource($451.api('order')).get(stat).$promise.then(function (list) {
+                for (var i = 0; i <= list.Count - 1; i++) {
+                    if (typeof cache[i] == 'object') continue;
+                    cache[i] = list.List[i - ((page - 1) * pagesize)] || i;
+                }
+                angular.forEach(list.List, function(order) {
+                    order.FromUserName = order.FromUserFirstName + " " + order.FromUserLastName;
+                });
+                _then(success, cache, list.Count);
+            });
+        }
+    }
+
+    return {
+        search: _search
+    };
 }]);
