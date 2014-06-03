@@ -75,13 +75,11 @@
                         <h5><b>SHIPPING ADDRESS</b></h5>
                         <div class="row">
                             <address>
-                                <p class="text-right">
-                                    {{selectedOrder.ShipAddress.FirstName + ' ' + selectedOrder.ShipAddress.LastName}}<br ng-show="selectedOrder.ShipAddress.FirstName || selectedOrder.ShipAddress.LastName">
-                                    <small>{{selectedOrder.ShipAddress.CompanyName}}</small><br ng-show="selectedOrder.ShipAddress.CompanyName">
-                                    {{selectedOrder.ShipAddress.Street1}}<br>
-                                    {{selectedOrder.ShipAddress.Street2}}<br ng-show="selectedOrder.ShipAddress.Street2">
-                                    {{selectedOrder.ShipAddress.City}}, {{selectedOrder.ShipAddress.State}} {{selectedOrder.ShipAddress.Zip}}
-                                </p>
+                                <p class="text-right">{{selectedOrder.ShipAddress.FirstName + ' ' + selectedOrder.ShipAddress.LastName}}</p>
+                                <p class="text-right">{{selectedOrder.ShipAddress.CompanyName}}</p>
+                                <p class="text-right">{{selectedOrder.ShipAddress.Street1}}</p>
+                                <p class="text-right">{{selectedOrder.ShipAddress.Street2}}</p>
+                                <p class="text-right">{{selectedOrder.ShipAddress.City}}<span ng-show="selectedOrder.BillAddress.City && selectedOrder.BillAddress.State">,</span> {{selectedOrder.ShipAddress.State}} {{selectedOrder.ShipAddress.Zip}}</p>
                             </address>
                         </div>
                     </div>
@@ -92,13 +90,11 @@
                         <h5><b>BILLING ADDRESS</b></h5>
                         <div class="row">
                             <address>
-                                <p class="text-right">
-                                    {{selectedOrder.BillAddress.FirstName + ' ' + selectedOrder.BillAddress.LastName}}<br ng-show="selectedOrder.BillAddress.FirstName || selectedOrder.BillAddress.LastName">
-                                    <small>{{selectedOrder.ShipAddress.CompanyName}}</small><br ng-show="selectedOrder.BillAddress.CompanyName">
-                                    {{selectedOrder.BillAddress.Street1}}<br>
-                                    {{selectedOrder.BillAddress.Street2}}<br ng-show="selectedOrder.BillAddress.Street2">
-                                    {{selectedOrder.BillAddress.City}}, {{selectedOrder.BillAddress.State}} {{selectedOrder.BillAddress.Zip}}
-                                </p>
+                                <p class="text-right">{{selectedOrder.BillAddress.FirstName + ' ' + selectedOrder.BillAddress.LastName}}</p>
+                                <p class="text-right">{{selectedOrder.ShipAddress.CompanyName}}</p>
+                                <p class="text-right">{{selectedOrder.BillAddress.Street1}}</p>
+                                <p class="text-right">{{selectedOrder.BillAddress.Street2}}</p>
+                                <p class="text-right">{{selectedOrder.BillAddress.City}}<span ng-show="selectedOrder.BillAddress.City && selectedOrder.BillAddress.State">,</span> {{selectedOrder.BillAddress.State}} {{selectedOrder.BillAddress.Zip}}</p>
                             </address>
                         </div>
                     </div>
