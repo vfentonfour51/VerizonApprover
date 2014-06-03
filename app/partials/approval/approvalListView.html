@@ -79,7 +79,7 @@
         </div>
     </ul>
     <div class="alert alert-warning text-center" ng-show="filteredOrders.length == 0 && orders.length > 0">
-        <p>Your filters are bunk.</p>
+        <p>No {{'orders' | rl}} match your filters.</p>
     </div>
     <div class="alert alert-info text-center" ng-show="orders.length == 0">
         <p>You have no orders awaiting approval.</p>

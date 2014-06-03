@@ -74,6 +74,7 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
 
         $scope.viewOrder = function(order) {
             $scope.orderLoadingIndicator = true;
+            $scope.orderMessage = null;
             Order.get(order.ID, function(ordr) {
                 $scope.selectedOrder = ordr;
                 $scope.orderLoadingIndicator = false;
@@ -91,9 +92,10 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             $scope.LineItem = item;
         };
 
-        $scope.$on('event:approvalComplete', function() {
+        $scope.$on('event:approvalComplete', function(event, type) {
             $scope.selectedOrder = null;
             $scope.settings.currentPage = 1;
+            $scope.orderMessage = (type == 'approve') ? 'Order approved successfully' : 'Order declined successfully';
             getOrdersAwaitingApproval($scope.settings.currentPage);
         });
 
