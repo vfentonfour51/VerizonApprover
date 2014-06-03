@@ -36,4 +36,7 @@ function ($scope, $rootScope, Order) {
     $scope.toggleComments = function(){
         $scope.commentToggle = !$scope.commentToggle;
     }
+    $scope.$on('event:changeStep', function(){
+        $scope.commentToggle = false;
+    });
 }]);

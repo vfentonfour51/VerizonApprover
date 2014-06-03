@@ -9,15 +9,14 @@
             <li style="padding:10px; float:none; width:100%;">
                 <textarea class="form-control" ng-model="order.ApprovalComment" placeholder="{{'Approval' | r}} {{'Comments' | r}}"></textarea>
             </li>
-
         </ul>
      </div>
     <ul>
         <li>
-            <button class="btn btn-danger" ng-click="declineOrder()">{{'Decline' | r}}</button>
+            <button class="btn btn-danger" style="text-transform:uppercase;" ng-click="declineOrder()">{{'Decline' | r}}</button>
         </li>
         <li>
-            <button class="btn btn-info" ng-click="toggleComments()"><i class="fa fa-comment"></i></button>
+            <button class="btn btn-info" style="text-transform:uppercase;" ng-click="toggleComments()">{{'Comment' | r}}</button>
         </li>
         <li>
             <loadingindicator ng-show="loadingIndicator" title="Please wait while we process your request."></loadingindicator>

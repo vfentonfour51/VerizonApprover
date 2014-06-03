@@ -15,4 +15,12 @@ four51.app.controller('LineItemApprovalViewCtrl', ['$scope', '$routeParams', 'Or
                 $scope.StaticSpecGroups.VariableSpecs = {Name: 'Variable Specs', Specs: $scope.LineItem.Specs};
             });
         });
+
+        $scope.ObjectSize = function(obj) {
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+        };
     }]);

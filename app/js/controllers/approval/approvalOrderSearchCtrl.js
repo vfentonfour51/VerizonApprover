@@ -5,9 +5,13 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             currentPage: 1
         };
 
-        $scope.viewToggle = true;
         $scope.changeStep = function(){
+            if(!$scope.viewToggle && !$scope.isDesktop()){
+                $scope.selectedOrder = null;
+            }
             $scope.viewToggle = !$scope.viewToggle;
+            window.scrollTo(0, 0);
+            $scope.$broadcast('event:changeStep');
         };
 
         $scope.sortOptions = [

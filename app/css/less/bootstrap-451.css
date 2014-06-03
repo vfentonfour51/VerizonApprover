@@ -7598,6 +7598,14 @@ table[datepicker] {
   .date-badge {
     width: 65px;
   }
+  .container-view {
+    margin-top: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .container-view {
+    margin-top: 0;
+  }
 }
 .date-badge {
   width: 70px;

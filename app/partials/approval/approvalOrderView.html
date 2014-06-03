@@ -1,3 +1,6 @@
+<div class="text-center" ng-show="!selectedOrder">
+    <h2>Please select an {{'order' | rc}}</h2>
+</div>
 <section class="approval-order-view container" ng-show="selectedOrder">
     <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we fetch your order"></loadingindicator>
     <div class="row">
@@ -30,6 +33,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="text-center" style="margin-bottom: 15px;">
+                <div class="btn btn-warning btn-block hidden-md hidden-lg" ng-click="changeStep()">Back to all {{'order' | r}}s</div>
             </div>
             <div class="well">
                 <div class="row">
@@ -178,6 +184,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="text-center">
+        <div class="btn btn-warning hidden-md hidden-lg" ng-click="changeStep()">Back to all {{'order' | r}}s</div>
     </div>
     <approval ng-show="selectedOrder.Status == 'AwaitingApproval' && (selectedOrder.UserCanApprove || user.Permissions.contains('ApproveAllselectedOrders'))" order="selectedOrder"/>
 </section>
