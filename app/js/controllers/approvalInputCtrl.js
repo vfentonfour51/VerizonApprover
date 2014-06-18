@@ -18,8 +18,7 @@ function ($scope, $rootScope, Order) {
 
 	$scope.declineOrder = function() {
 		$scope.loadingIndicator = true;
-		$scope.order.Decline = true;
-		Order.submit($scope.order,
+        Order.decline($scope.order,
 			function(data) {
 				$scope.order = data;
 				$scope.loadingIndicator = false;

@@ -57,18 +57,21 @@ function ($scope, $location, $451, Order, OrderConfig, User) {
 		}
 	};
 
-	$scope.removeItem = function(item) {
-		if ($scope.currentOrder.LineItems.length > 1) {
-			if (confirm('Are you sure you wish to remove this item from your cart?') == true) {
-				item.Selected = true;
-				$scope.saveChanges();
-			}
-		}
-		else {
-			item.Selected = true;
-			$scope.saveChanges();
-		}
-	}
+    $scope.removeItem = function(item) {
+        if (confirm('Are you sure you wish to remove this item from your cart?') == true) {
+            Order.deletelineitem(item.ID,
+                function(order) {
+                    $scope.currentOrder = order;
+                    $scope.displayLoadingIndicator = false;
+                    $scope.actionMessage = 'Your Changes Have Been Saved!';
+                },
+                function (ex) {
+                    $scope.errorMessage = ex.Message;
+                    $scope.displayLoadingIndicator = false;
+                }
+            );
+        }
+    }
 
     $scope.checkOut = function() {
 	    $scope.displayLoadingIndicator = true;

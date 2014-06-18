@@ -55,7 +55,7 @@ four51.app.controller('OrderApprovalViewCtrl', ['$scope', '$location', '$routePa
             $scope.errorMessage = null;
             $scope.errorMessage = null;
             $scope.order.Repeat = true;
-            Order.save($scope.order,
+            Order.repeat($scope.order.ID,
                 function(data) {
                     $scope.currentOrder = data;
                     $scope.user.CurrentOrderID = data.ID;

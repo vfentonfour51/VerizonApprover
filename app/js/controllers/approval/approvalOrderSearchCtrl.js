@@ -44,10 +44,9 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             getOrdersAwaitingApproval($scope.settings.currentPage);
         });
 
-        $scope.approveOrder = function(order) {
+        /*$scope.approveOrder = function(order) {
             $scope.orderLoadingIndicator = true;
-            order.Approve = true;
-            Order.submit(order,
+            Order.approve($scope.order,
                 function(data) {
                     $scope.order = data;
                     order.ApprovalStatus = 'Approved';
@@ -63,14 +62,13 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
 
         $scope.declineOrder = function(order) {
             $scope.orderLoadingIndicator = true;
-            order.Decline = true;
-            Order.submit(order, function(data) {
+            Order.decline(order, function(data) {
                 $scope.order = data;
                 order.ApprovalStatus = 'Declined';
                 $scope.settings.currentPage = 1;
                 getOrdersAwaitingApproval($scope.settings.currentPage);
             });
-        };
+        };*/
 
         $scope.viewOrder = function(order) {
             $scope.orderLoadingIndicator = true;
