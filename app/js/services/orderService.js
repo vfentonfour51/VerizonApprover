@@ -106,6 +106,7 @@ four51.app.factory('Order', ['$resource', '$rootScope', '$451', 'Security', 'Err
     }
 
     var _decline = function(order, success, error) {
+        order.ApprovalComment = order.ApprovalComment ? order.ApprovalComment : "";
         $resource($451.api('orderapprovaldecline'), {}, { decline: { method: 'PUT', params: { 'id': order.ID, 'comment': order.ApprovalComment}}}).decline().$promise.then(
             function(o) {
                 _extend(o);
