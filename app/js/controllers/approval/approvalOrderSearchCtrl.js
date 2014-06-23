@@ -76,9 +76,20 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
             Order.get(order.ID, function(ordr) {
                 $scope.selectedOrder = ordr;
                 $scope.orderLoadingIndicator = false;
-                Address.get($scope.selectedOrder.LineItems[0].ShipAddressID, function(add) {
-                    $scope.selectedOrder.ShipAddress = add;
-                });
+                if (ordr.IsMultipleShip()) {
+                    angular.forEach(ordr.LineItems, function(item) {
+                        if (item.ShipAddressID) {
+                            Address.get(item.ShipAddressID, function(add) {
+                                item.ShipAddress = add;
+                            });
+                        }
+                    });
+                }
+                else {
+                    Address.get(ordr.ShipAddressID || ordr.LineItems[0].ShipAddressID, function(add) {
+                        ordr.ShipAddress = add;
+                    });
+                }
                 Address.get($scope.selectedOrder.BillAddressID, function(add){
                     $scope.selectedOrder.BillAddress = add;
                 });
@@ -110,4 +121,8 @@ four51.app.controller('ApprovalOrderSearchCtrl', ['$scope', '$location', 'OrderS
                 isDesktopResult = true;
             return isDesktopResult;
         };
+
+        $scope.backToOrderList = function() {
+            $scope.viewToggle = 0;
+        }
     }]);

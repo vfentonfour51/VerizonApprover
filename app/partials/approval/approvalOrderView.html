@@ -4,6 +4,15 @@
 <div class="text-center" ng-show="!selectedOrder">
     <h2>Please select an {{'order' | rc}}</h2>
 </div>
+<div class="navbar-fixed-bottom hidden-md hidden-lg">
+    <ul>
+        <li style="width: 100%;">
+            <a class="btn btn-warning" ng-click="backToOrderList()">{{'Back To Order List' | r}}</a>
+        </li>
+    </ul>
+</div>
+
+
 <section class="approval-order-view container" ng-show="selectedOrder">
     <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we fetch your order"></loadingindicator>
     <div class="row">
@@ -19,19 +28,19 @@
                 <div class="col-xs-9">
                     <h4 class="text-center">Order ID: <b>{{selectedOrder.ExternalID}}</b></h4>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div ng-class="{'col-sm-6': selectedOrder.CostCenter}">
                             <ul class="list-group">
                                 <li class="list-group-item text-center"><small><b>Payment Method</b></small></li>
-                                <li class="list-group-item" style="padding:7px 10px;">
+                                <li class="list-group-item text-center" style="padding:7px 10px;">
                                     {{selectedOrder.PaymentMethodText}}<br ng-show="selectedOrder.CreditCard.Type">
                                     <small ng-show="selectedOrder.CreditCard.Type">{{selectedOrder.CreditCard.DisplayName}}</small>
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-sm-6">
+                        <div ng-show="selectedOrder.CostCenter" ng-class="{'col-sm-6': selectedOrder.CostCenter}">
                             <ul class="list-group">
                                 <li class="list-group-item text-center"><small><b>Cost Center</b></small></li>
-                                <li class="list-group-item" style="padding:7px 10px;">{{selectedOrder.CostCenter}}</li>
+                                <li class="list-group-item text-center" style="padding:7px 10px;">{{selectedOrder.CostCenter}}</li>
                             </ul>
                         </div>
                     </div>
@@ -78,28 +87,28 @@
                 </div>
             </div>
             <div class="row">
-                <div class="container" ng-class="{'col-sm-6': (selectedOrder.BillAddress && selectedOrder.ShipAddress)}">
+                <div class="container" ng-class="{'col-sm-6': (selectedOrder.BillAddress && selectedOrder.ShipAddress)}" ng-show="!selectedOrder.IsMultipleShip()">
                     <div class="well" ng-show="selectedOrder.ShipAddress">
                         <i class="fa fa-map-marker fa-2x text-muted pull-left"></i>
                         <h5><b>SHIPPING ADDRESS</b></h5>
                         <div class="row">
                             <address>
-                                <p class="text-right">{{selectedOrder.ShipAddress.FirstName + ' ' + selectedOrder.ShipAddress.LastName}}</p>
+                                <p class="text-right">{{(selectedOrder.LineItems[0].ShipFirstName || selectedOrder.ShipAddress.FirstName) + ' ' + (selectedOrder.LineItems[0].ShipLastName || selectedOrder.ShipAddress.LastName)}}</p>
                                 <p class="text-right">{{selectedOrder.ShipAddress.CompanyName}}</p>
                                 <p class="text-right">{{selectedOrder.ShipAddress.Street1}}</p>
                                 <p class="text-right">{{selectedOrder.ShipAddress.Street2}}</p>
-                                <p class="text-right">{{selectedOrder.ShipAddress.City}}<span ng-show="selectedOrder.BillAddress.City && selectedOrder.BillAddress.State">,</span> {{selectedOrder.ShipAddress.State}} {{selectedOrder.ShipAddress.Zip}}</p>
+                                <p class="text-right">{{selectedOrder.ShipAddress.City}}<span ng-show="selectedOrder.ShipAddress.City && selectedOrder.ShipAddress.State">,</span> {{selectedOrder.ShipAddress.State}} {{selectedOrder.ShipAddress.Zip}}</p>
                             </address>
                         </div>
                     </div>
                 </div>
-                <div class="container" ng-class="{'col-sm-6': (selectedOrder.BillAddress && selectedOrder.ShipAddress)}">
+                <div class="container" ng-class="{'col-sm-6': (selectedOrder.BillAddress && (selectedOrder.ShipAddress && !selectedOrder.IsMultipleShip()))}">
                     <div class="well" ng-show="selectedOrder.BillAddress">
                         <i class="fa fa-map-marker fa-2x text-muted pull-left"></i>
                         <h5><b>BILLING ADDRESS</b></h5>
                         <div class="row">
                             <address>
-                                <p class="text-right">{{selectedOrder.BillAddress.FirstName + ' ' + selectedOrder.BillAddress.LastName}}</p>
+                                <p class="text-right">{{(selectedOrder.BillFirstName || selectedOrder.BillAddress.FirstName) + ' ' + (selectedOrder.BillLastName || selectedOrder.BillAddress.LastName)}}</p>
                                 <p class="text-right">{{selectedOrder.ShipAddress.CompanyName}}</p>
                                 <p class="text-right">{{selectedOrder.BillAddress.Street1}}</p>
                                 <p class="text-right">{{selectedOrder.BillAddress.Street2}}</p>
@@ -156,11 +165,18 @@
                                             </h2>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6" ng-if="!(user.Permissions.contains('HidePricing'))">
+                                    <div class="col-xs-3" ng-if="!(user.Permissions.contains('HidePricing'))">
                                         <p>
                                             <small>{{'Unit Price' | r}}</small>
                                             <br/>
                                             {{item.UnitPrice | currency}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-3" ng-if="item.CostCenter">
+                                        <p>
+                                            <small>{{'Cost Center' | r}}</small>
+                                            <br/>
+                                            {{item.CostCenter}}
                                         </p>
                                     </div>
                                 </div>
@@ -182,6 +198,23 @@
                                         <span ng-if="spec.ControlType != 'File'">{{spec.Value || '(unspecified)'}}</span>
                                     </li>
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="selectedOrder.IsMultipleShip()">
+                            <div class="col-md-4">
+                                <button class="btn btn-default btn-block" ng-init="toggleShipping = false" ng-click="toggleShipping = !toggleShipping">
+                                    <span ng-show="toggleShipping == false"><i class="fa fa-plus-circle"></i> {{'Shipping' | r}} {{'Address' | r}} </span>
+                                    <span ng-show="toggleShipping == true"><i class="fa fa-minus-circle"></i> {{'Shipping' | r}} {{'Address' | r}} </span>
+                                </button>
+                            </div>
+                            <div class="col-md-8">
+                                <address class="well well-sm" collapse="!toggleShipping">
+                                    <p>{{(item.ShipFirstName || item.ShipAddress.FirstName) + ' ' + (item.ShipLastName || item.ShipAddress.LastName)}}</p>
+                                    <p>{{item.ShipAddress.CompanyName}}</p>
+                                    <p>{{item.ShipAddress.Street1}}</p>
+                                    <p>{{item.ShipAddress.Street2}}</p>
+                                    <p>{{item.ShipAddress.City}}<span ng-show="item.ShipAddress.City && item.ShipAddress.State">,</span> {{item.ShipAddress.State}} {{item.ShipAddress.Zip}}</p>
+                                </address>
                             </div>
                         </div>
                     </div>
