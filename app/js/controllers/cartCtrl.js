@@ -59,9 +59,15 @@ function ($scope, $location, $451, Order, OrderConfig, User) {
 
     $scope.removeItem = function(item) {
         if (confirm('Are you sure you wish to remove this item from your cart?') == true) {
-            Order.deletelineitem(item.ID,
+            Order.deletelineitem($scope.currentOrder.ID, item.ID,
                 function(order) {
                     $scope.currentOrder = order;
+                    if (!order) {
+                        $scope.user.CurrentOrderID = null;
+                        User.save($scope.user, function(){
+                            $location.path('catalog');
+                        });
+                    }
                     $scope.displayLoadingIndicator = false;
                     $scope.actionMessage = 'Your Changes Have Been Saved!';
                 },

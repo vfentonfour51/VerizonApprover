@@ -82,8 +82,10 @@ four51.app.factory('Order', ['$resource', '$rootScope', '$451', 'Security', 'Err
     }
 
     var _repeat = function(id, success, error) {
-        $resource($451.api('order'), {}, { repeat: { method: 'PUT', params: { 'id': id}}}).repeat().$promise.then(
+        $resource($451.api('order/repeat/:id'), {'id': id}, { repeat: { method: 'PUT'}}).repeat().$promise.then(
             function(o) {
+                store.set('451Cache.Order.' + o.ID);
+                store.remove('451Cache.User' + $451.apiName);
                 _extend(o);
                 _then(success, o);
             },
@@ -94,7 +96,7 @@ four51.app.factory('Order', ['$resource', '$rootScope', '$451', 'Security', 'Err
     }
 
     var _approve = function(order, success, error) {
-        $resource($451.api('orderapprovalapprove'), {}, { approve: { method: 'PUT', params: { 'id': order.ID, 'comment': order.ApprovalComment}}}).approve().$promise.then(
+        $resource($451.api('order/approve/:id'), {'id': order.ID}, { approve: { method: 'PUT', params: { 'comment': order.ApprovalComment}}}).approve().$promise.then(
             function(o) {
                 _extend(o);
                 _then(success, o);
@@ -106,8 +108,7 @@ four51.app.factory('Order', ['$resource', '$rootScope', '$451', 'Security', 'Err
     }
 
     var _decline = function(order, success, error) {
-        order.ApprovalComment = order.ApprovalComment ? order.ApprovalComment : "";
-        $resource($451.api('orderapprovaldecline'), {}, { decline: { method: 'PUT', params: { 'id': order.ID, 'comment': order.ApprovalComment}}}).decline().$promise.then(
+        $resource($451.api('order/decline/:id'), {'id': order.ID}, { decline: { method: 'PUT', params: { 'comment': order.ApprovalComment}}}).decline().$promise.then(
             function(o) {
                 _extend(o);
                 _then(success, o);
@@ -118,15 +119,18 @@ four51.app.factory('Order', ['$resource', '$rootScope', '$451', 'Security', 'Err
         );
     }
 
-    var _deletelineitem = function(id, success, error) {
+    var _deletelineitem = function(id, lineitemid, success, error) {
         store.remove('451Cache.Order.' + id);
-        $resource($451.api('order'), {}, { deletelineitem: { method: 'DELETE', params: { 'id': id }}}).deletelineitem().$promise.then(
+        $resource($451.api('order/:id/lineitem/:lineitemid'), {'id': id, 'lineitemid': lineitemid }, { lineitemdelete: { method: 'DELETE'}}).lineitemdelete().$promise.then(
             function(o) {
-                if (o) {
+                if (o.ID) {
                     store.set('451Cache.Order.' + o.ID, o);
                     _extend(o);
+                    _then(success, o);
+                } else {
+                    store.remove('451Cache.User' + $451.apiName);
+                    _then(success, null);
                 }
-                _then(success, o);
             },
             function(ex) {
                 error(Error.format(ex));
