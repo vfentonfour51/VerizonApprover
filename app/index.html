@@ -18,25 +18,25 @@
 <body ng-cloak ng-class="ng-cloak">
 <section>
     <section ng-hide="Four51User.isAuthenticated() || isAnon" class="container">
-        <login />
+        <login></login>
     </section>
     <section ng-show="Four51User.isAuthenticated()" id="content">
         <section class="hidden-print">
-            <navigation />
+            <navigation></navigation>
         </section>
         <section class="hidden-print">
-            <branding />
+            <branding></branding>
         </section>
         <section class="container-view">
-            <ng-view autoscroll />
+            <ng-view autoscroll></ng-view>
         </section>
         <section class="hidden-print">
-            <copyright ng-if="!user.Permissions.contains('UnBrandedSite')" />
+            <copyright ng-if="!user.Permissions.contains('UnBrandedSite')"></copyright>
         </section>
     </section>
 </section>
 
-    <script type="text/javascript" src="//dl1d2m8ri9v3j.cloudfront.net/releases/1.2.4/tracker.js" data-customer="bfec7bded14d43a7ace2697594e1369d"></script>
+    <!--<script type="text/javascript" src="//dl1d2m8ri9v3j.cloudfront.net/releases/1.2.4/tracker.js" data-customer="bfec7bded14d43a7ace2697594e1369d"></script>-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" data-group="cdn"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js" data-group="cdn"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js" data-group="cdn"></script>

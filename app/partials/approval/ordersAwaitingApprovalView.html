@@ -3,7 +3,7 @@
 <div class="col-md-4 col-sm-5">
     <div ng-class="{'order-list-container': !isPhone()}">
         <div ng-class="{'order-list-scrollbox': isDesktop()}">
-            <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we load your orders"/>
+            <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we load your orders"></loadingindicator>
             <div ng-init="toggleButtons = false" class="order-list-row" ng-class="{'selected-order': order.ExternalID == selectedOrder.ExternalID, 'row': isPhone()}" ng-repeat="order in orders" ng-click="viewOrder(order)" hm-double-tap="viewOrder(order)" hm-swipe-left="toggleButtons = true" hm-swipe-right="toggleButtons = false">
                 <div class="approval-button-overlay" ng-hide="!toggleButtons || !isPhone()">
                     <div class="container" style="padding-top:20px;">
@@ -212,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                    <approval id="notPhone" ng-show="selectedOrder.Status == 'AwaitingApproval' && (selectedOrder.UserCanApprove || user.Permissions.contains('ApproveAllselectedOrders'))" order="selectedOrder"/>
+                    <approval id="notPhone" ng-show="selectedOrder.Status == 'AwaitingApproval' && (selectedOrder.UserCanApprove || user.Permissions.contains('ApproveAllselectedOrders'))" order="selectedOrder"></approval>
                 </div>
             </section>
         </div>

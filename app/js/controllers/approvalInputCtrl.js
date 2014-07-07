@@ -2,6 +2,7 @@ four51.app.controller('ApprovalInputCtrl', ['$scope', '$rootScope', 'Order',
 function ($scope, $rootScope, Order) {
 	$scope.approveOrder = function() {
 		$scope.loadingIndicator = true;
+        $scope.order.ApprovalComment = $scope.ApprovalComment;
         Order.approve($scope.order,
 			function(data) {
 				$scope.order = data;
@@ -17,6 +18,7 @@ function ($scope, $rootScope, Order) {
 
 	$scope.declineOrder = function() {
 		$scope.loadingIndicator = true;
+        $scope.order.ApprovalComment = $scope.ApprovalComment;
         Order.decline($scope.order,
 			function(data) {
 				$scope.order = data;

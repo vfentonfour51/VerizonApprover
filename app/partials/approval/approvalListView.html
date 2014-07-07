@@ -11,7 +11,7 @@
                             <div class="view-form-icon">
                                 <div>
                                     <label>{{'Search' | r}}</label>
-                                    <input type="text" ng-model="keyword" class="form-control"/>
+                                    <input type="text" ng-model="keyword" class="form-control" />
                                     <i class="fa fa-search"></i>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
             <pagination page="settings.currentPage" max-size="8" rotate="false" boundary-links="true" total-items="settings.listCount"
                         items-per-page="settings.pageSize" direction-links="true"></pagination>
         </div>
-        <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we load your orders"/>
+        <loadingindicator ng-show="orderLoadingIndicator" title="Please wait while we load your orders"></loadingindicator>
         <li ng-repeat="order in filteredOrders = (orders | paginate:(settings.currentPage-1) * settings.pageSize | limitTo:settings.pageSize)  | filter:keyword | orderBy : sortOption.Value : reverse">
            <div ng-click="viewOrder(order); changeStep(1);" ng-class="{'active': order.ExternalID == selectedOrder.ExternalID}">
                <div class="row">

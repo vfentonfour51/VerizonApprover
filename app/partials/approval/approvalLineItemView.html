@@ -1,5 +1,5 @@
 <section class="product-detail-default">
-    <loadingindicator ng-show="loadingIndicator" title="Please wait while we fetch product information" />
+    <loadingindicator ng-show="loadingIndicator" title="Please wait while we fetch product information"></loadingindicator>
     <div class="btn btn-warning btn-block" ng-click="changeStep(1)" style="margin-bottom:15px;">Back to {{'order' | r}}</div>
     <!-- BREADCRUMB!-->
     <!--<productnav product="LineItem.Product" variant="LineItem.Variant" />-->
@@ -62,11 +62,11 @@
                     <h4 ng-show="LineItem.Product.ExternalID" class="text-info">
                         {{'ID' | r}}: {{LineItem.Product.ExternalID}}
                     </h4>
-                    <p id="451qa_prod_desc" ng-bind-html="trustedDescription(LineItem.Product)" />
-                    <p ng-show="LineItem.Variant.Description" ng-bind-html="trustedDescription(LineItem.Variant)" />
+                    <p id="451qa_prod_desc" ng-bind-html="trustedDescription(LineItem.Product)"></p>
+                    <p ng-show="LineItem.Variant.Description" ng-bind-html="trustedDescription(LineItem.Variant)"></p>
                 </div>
                 <!-- PRICE SCHEDULE PANEL! --->
-                <priceScheduleTable ng-if="!(user.Permissions.contains('HidePricing')) && LineItem.PriceSchedule.PriceBreaks.length > 1" ps='LineItem.PriceSchedule' p='LineItem.Product'/>
+                <priceScheduleTable ng-if="!(user.Permissions.contains('HidePricing')) && LineItem.PriceSchedule.PriceBreaks.length > 1" ps='LineItem.PriceSchedule' p='LineItem.Product'></priceScheduleTable>
             </div>
         </div>
 
@@ -81,7 +81,7 @@
                 <ul class="list-group">
                     <li ng-repeat="spec in itemspecs" class="list-group-item" ng-if="spec.Value">
                         <span class="text-info">{{spec.Name}}: </span>
-                        <span ng-if="spec.ControlType == 'File'"><a ng-href="{{spec.File.Url}}">{{spec.File.OriginalName + Extension}}</a></span></span>
+                        <span ng-if="spec.ControlType == 'File'"><a ng-href="{{spec.File.Url}}">{{spec.File.OriginalName + Extension}}</a></span>
                         <span ng-if="spec.ControlType != 'File'">{{spec.Value || '(unspecified)'}}</span>
                     </li>
                 </ul>
