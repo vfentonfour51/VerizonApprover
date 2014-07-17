@@ -56,19 +56,25 @@
                            <div>{{order.DateCreated | date:'EEEE'}}</div>
                        </div>
                    </div>
-                   <div class="col-xs-5">
-                       <ul class="list-group">
-                           <li class="list-group-item text-center list-group-item-info"><small>{{'Order ID' | r}}</small></li>
-                           <li class="list-group-item"><small>{{order.ExternalID}}</small></li>
-                       </ul>
-                       <ul class="list-group">
-                           <li class="list-group-item text-center list-group-item-info"><small>{{'Creator' | r}}</small></li>
-                           <li class="list-group-item"><small>{{order.FromUserName}}</small></li>
-                       </ul>
-                   </div>
-                   <div class="col-xs-4 text-center">
-                       <small>{{'Total' | r}}</small>
-                       <h3 class="text-success">{{order.Total | currency:"$"}}</h3>
+                   <div class="col-xs-9">
+                       <div class="row">
+                           <div class="col-xs-6">
+                               <ul class="list-group">
+                                   <li class="list-group-item text-center list-group-item-info"><small>{{'Order ID' | r}}</small></li>
+                                   <li class="list-group-item"><small>{{order.ExternalID}}</small></li>
+                               </ul>
+                           </div>
+                           <div class="col-xs-6">
+                               <ul class="list-group">
+                                   <li class="list-group-item text-center list-group-item-info"><small>{{'Creator' | r}}</small></li>
+                                   <li class="list-group-item"><small>{{order.FromUserName}}</small></li>
+                               </ul>
+                           </div>
+                       </div>
+                       <div class="col-xs-12 text-center">
+                           <small>{{'Total' | r}}</small>
+                           <h3 class="text-success" style="margin-top:1px;">{{order.Total | currency:"$"}}</h3>
+                       </div>
                    </div>
                </div>
            </div>

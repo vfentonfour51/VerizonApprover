@@ -159,9 +159,9 @@
                                     <div class="col-xs-6">
                                         <div ng-if="!(user.Permissions.contains('HidePricing'))">
                                             <small>{{'Total' | r}}</small>
-                                            <h2 class="text-success">
+                                            <h4 class="text-success" style="margin-top: 0px;">
                                                 {{item.LineTotal | currency}}
-                                            </h2>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="col-xs-3" ng-if="!(user.Permissions.contains('HidePricing'))">
