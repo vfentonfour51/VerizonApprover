@@ -62,7 +62,7 @@
                     <h4 ng-show="LineItem.Product.ExternalID" class="text-info">
                         {{'ID' | r}}: {{LineItem.Product.ExternalID}}
                     </h4>
-                    <p id="451qa_prod_desc" ng-bind-html="trustedDescription(LineItem.Product)"></p>
+                    <p ng-bind-html='LineItem.Product.Description'></p>
                     <p ng-show="LineItem.Variant.Description" ng-bind-html="trustedDescription(LineItem.Variant)"></p>
                 </div>
                 <!-- PRICE SCHEDULE PANEL! --->

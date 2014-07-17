@@ -226,5 +226,5 @@
     <div class="text-center">
         <div class="btn btn-warning hidden-md hidden-lg" ng-click="changeStep(0)">Back to all {{'order' | r}}s</div>
     </div>
-    <approval ng-show="selectedOrder.Status == 'AwaitingApproval' && (selectedOrder.UserCanApprove || user.Permissions.contains('ApproveAllselectedOrders'))" order="selectedOrder"></approval>
+    <approval ng-show="selectedOrder.Status == 'AwaitingApproval' && (selectedOrder.UserCanApprove || user.Permissions.contains('ApproveAllOrders'))" order="selectedOrder"></approval>
 </section>
